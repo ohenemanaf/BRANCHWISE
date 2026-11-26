@@ -90,7 +90,7 @@ export function GraphView({
   }, [headNode, reduce]);
 
   const t = reduce ? { duration: 0 } : spring;
-  const branchNames = Object.keys(repo.branches);
+  const branchNames = Object.keys(repo.branches).sort();
   const summary = `${title}: ${layout.nodes.filter((n) => n.reachable).length} commits${branchNames.length ? `, branches ${branchNames.join(", ")}` : ""}.`;
 
   return (

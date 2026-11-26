@@ -23,7 +23,7 @@ export function SandboxApp() {
   const [presetId, setPresetId] = useState("started");
   const [first] = useState(() => presetById("started"));
   const [initialWorld] = useState(() => first.build());
-  const sb = useSandbox(initialWorld, `Preset: ${first.name}. ${first.hint}`);
+  const sb = useSandbox(initialWorld, `Preset: ${first.name}. ${first.blurb} ${first.hint}`);
   const [copied, setCopied] = useState(false);
   const loaded = useRef(false);
 
@@ -52,7 +52,7 @@ export function SandboxApp() {
   const choose = (id: string) => {
     const p = presetById(id);
     setPresetId(id);
-    sb.reset(p.build(), `Preset: ${p.name}. ${p.hint}`);
+    sb.reset(p.build(), `Preset: ${p.name}. ${p.blurb} ${p.hint}`);
     const url = new URL(window.location.href);
     url.hash = "";
     url.searchParams.set("preset", id);
@@ -97,8 +97,8 @@ export function SandboxApp() {
               className="h-7 max-w-[56vw] rounded-md border border-rule-strong bg-surface px-1.5 text-[12.5px]"
             >
               {PRESETS.map((p) => (
-                <option key={p.id} value={p.id}>
-                  {p.name}: {p.blurb}
+                <option key={p.id} value={p.id} title={p.blurb}>
+                  {p.name}
                 </option>
               ))}
             </select>
