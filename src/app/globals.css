@@ -1,26 +1,189 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+:root {
+  --bg: #f3f5f8;
+  --surface: #ffffff;
+  --surface-2: #f8f9fb;
+  --ink: #18202e;
+  --ink-2: #4a5466;
+  --muted: #6b7585;
+  --rule: #e1e5eb;
+  --rule-strong: #cdd3dc;
+  --focus: #2453d6;
+
+  /* transit lines: one per lane */
+  --lane-0: #2453d6;
+  --lane-1: #0c9c6c;
+  --lane-2: #e67700;
+  --lane-3: #9c36b5;
+  --lane-4: #0b8ba3;
+  --lane-5: #c2255c;
+  --lane-6: #5c7cfa;
+  --lane-7: #74b816;
+
+  --ok: #0c8a5f;
+  --ok-soft: #e3f6ee;
+  --bad: #d6336c;
+  --bad-soft: #fde8ef;
+  --warn: #b45f06;
+  --warn-soft: #fff1dc;
+  --info-soft: #e8eefc;
+
+  --term-bg: #121926;
+  --term-ink: #dbe2ee;
+  --term-muted: #8792a6;
+  --term-ok: #69db9c;
+  --term-bad: #ff8fab;
+  --term-hint: #a5b4fc;
+  --term-warn: #ffd08a;
+
+  --radius: 10px;
+  --radius-sm: 7px;
+  --ease: cubic-bezier(0.32, 0.72, 0, 1);
+  color-scheme: light;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  :root:not([data-theme="light"]) {
+    --bg: #0e131b;
+    --surface: #151b25;
+    --surface-2: #1a2130;
+    --ink: #e6eaf1;
+    --ink-2: #b3bccb;
+    --muted: #8590a3;
+    --rule: #252e3d;
+    --rule-strong: #334055;
+    --focus: #7b9cff;
+    --lane-0: #6d8dff;
+    --lane-1: #38c995;
+    --lane-2: #ffa94d;
+    --lane-3: #d17ee6;
+    --lane-4: #3bc9db;
+    --lane-5: #f06595;
+    --lane-6: #91a7ff;
+    --lane-7: #a9e34b;
+    --ok: #38c995;
+    --ok-soft: #10302a;
+    --bad: #f06595;
+    --bad-soft: #3a1726;
+    --warn: #ffa94d;
+    --warn-soft: #3a2810;
+    --info-soft: #1b2645;
+    --term-bg: #0a0e15;
+    color-scheme: dark;
   }
 }
+:root[data-theme="dark"] {
+  --bg: #0e131b;
+  --surface: #151b25;
+  --surface-2: #1a2130;
+  --ink: #e6eaf1;
+  --ink-2: #b3bccb;
+  --muted: #8590a3;
+  --rule: #252e3d;
+  --rule-strong: #334055;
+  --focus: #7b9cff;
+  --lane-0: #6d8dff;
+  --lane-1: #38c995;
+  --lane-2: #ffa94d;
+  --lane-3: #d17ee6;
+  --lane-4: #3bc9db;
+  --lane-5: #f06595;
+  --lane-6: #91a7ff;
+  --lane-7: #a9e34b;
+  --ok: #38c995;
+  --ok-soft: #10302a;
+  --bad: #f06595;
+  --bad-soft: #3a1726;
+  --warn: #ffa94d;
+  --warn-soft: #3a2810;
+  --info-soft: #1b2645;
+  --term-bg: #0a0e15;
+  color-scheme: dark;
+}
 
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-muted: var(--muted);
+  --color-rule: var(--rule);
+  --color-rule-strong: var(--rule-strong);
+  --color-focus: var(--focus);
+  --color-ok: var(--ok);
+  --color-ok-soft: var(--ok-soft);
+  --color-bad: var(--bad);
+  --color-bad-soft: var(--bad-soft);
+  --color-warn: var(--warn);
+  --color-warn-soft: var(--warn-soft);
+  --color-info-soft: var(--info-soft);
+  --color-lane-0: var(--lane-0);
+  --color-term-bg: var(--term-bg);
+  --font-sans: var(--font-plex-sans);
+  --font-mono: var(--font-plex-mono);
+  --radius-card: var(--radius);
+}
+
+html {
+  background: var(--bg);
+}
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-plex-sans), system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--lane-0) 25%, transparent);
+}
+
+.prose-lesson p {
+  margin: 0 0 0.8em;
+  max-width: 68ch;
+}
+.prose-lesson code,
+.inline-code {
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-size: 0.88em;
+  background: var(--surface-2);
+  border: 1px solid var(--rule);
+  border-radius: 5px;
+  padding: 0.05em 0.35em;
+}
+.prose-lesson strong {
+  font-weight: 600;
+}
+.prose-lesson ul {
+  margin: 0 0 0.8em 1.1em;
+  list-style: disc;
+}
+.prose-lesson li {
+  margin: 0.15em 0;
+}
+
+.scroll-thin {
+  scrollbar-width: thin;
+  scrollbar-color: var(--rule-strong) transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }
