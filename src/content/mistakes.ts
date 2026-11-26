@@ -61,7 +61,7 @@ const detachedWork = () =>
 const midConflict = (): World => run(conflicting(), "git merge spicy").world;
 
 const badRebase = () =>
-  script(diverged(), ["git switch feature", "git rebase --onto main~2 main~1 feature"]);
+  script(diverged(), ["git switch feature", "git rebase --onto main feature~1 feature"]);
 
 const secretCommitted = () => script(started(), ['echo "API_KEY=sk-live-123" > .env', 'echo "uses the key" > api.js', "git add .", 'git commit -m "Add API client"']);
 
