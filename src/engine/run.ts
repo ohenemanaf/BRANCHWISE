@@ -7,6 +7,7 @@ import * as branching from "./commands/branching";
 import * as history from "./commands/history";
 import * as remote from "./commands/remote";
 import * as files from "./commands/files";
+import * as plumbing from "./commands/plumbing";
 import { gh } from "./commands/gh";
 
 export const gitCommands: Record<string, Command> = {
@@ -38,10 +39,14 @@ export const gitCommands: Record<string, Command> = {
   pull: remote.pull,
   push: remote.push,
   clone: remote.clone,
+  "cat-file": plumbing.catFile,
+  "rev-parse": plumbing.revParse,
+  "ls-files": plumbing.lsFiles,
+  submodule: plumbing.submodule,
 };
 
 /** Real git commands this simulator knowingly doesn't model. */
-const notSimulated = ["worktree", "blame", "clean", "gc", "notes", "archive", "describe", "shortlog", "grep", "am", "apply", "format-patch", "submodule", "sparse-checkout", "lfs", "filter-branch", "range-diff", "maintenance"];
+const notSimulated = ["worktree", "blame", "clean", "gc", "notes", "archive", "describe", "shortlog", "grep", "am", "apply", "format-patch", "sparse-checkout", "lfs", "filter-branch", "range-diff", "maintenance"];
 
 const shell: Record<string, Command> = {
   ls: files.ls,

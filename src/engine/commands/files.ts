@@ -1,6 +1,7 @@
 import { type Command, PROJECT_PATH } from "../context";
 import { fail, status } from "../repo";
 import { runTests } from "./history";
+import { gitFile, listGitDir } from "./plumbing";
 
 /** Shell builtins that only touch the working directory. */
 
@@ -9,6 +10,12 @@ const norm = (p: string) => p.replace(/^\.\//, "").replace(/\/+$/, "");
 export const ls: Command = (ctx, argv) => {
   const all = argv.includes("-a") || argv.includes("-la") || argv.includes("-al");
   const dir = norm(argv.find((x) => !x.startsWith("-")) ?? "");
+  if (dir === ".git" || dir.startsWith(".git/")) {
+    const list = listGitDir(ctx, dir);
+    if (!list) fail(`ls: cannot access '${dir}': No such file or directory`);
+    list!.forEach((n) => ctx.out(n, n.endsWith("/") ? "hint" : "normal"));
+    return;
+  }
   const names = new Set<string>();
   for (const p of Object.keys(ctx.repo.workdir)) {
     if (dir && !p.startsWith(dir + "/")) continue;
@@ -28,6 +35,12 @@ export const cat: Command = (ctx, argv) => {
   if (!argv.length) fail("cat: missing file operand");
   for (const f of argv) {
     const p = norm(f);
+    if (p.startsWith(".git/")) {
+      const g = gitFile(ctx, p);
+      if (g === null) fail(`cat: ${f}: No such file or directory`);
+      ctx.out(g!);
+      continue;
+    }
     const c = ctx.repo.workdir[p];
     if (c === undefined) fail(`cat: ${f}: No such file or directory`);
     if (c) ctx.out(c.replace(/\n$/, ""));
