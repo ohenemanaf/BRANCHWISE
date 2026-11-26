@@ -46,7 +46,7 @@ export function SandboxApp() {
     // The URL (incl. #hash, which never reaches the server) is only readable after mount.
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setPresetId(p.id);
-    sb.reset(w, shared ? `Loaded a shared session: preset "${p.name}" plus ${notes.length} command${notes.length === 1 ? "" : "s"}:\n  ${notes.join("\n  ")}` : `Preset: ${p.name}. ${p.hint}`);
+    sb.reset(w, shared ? `Loaded a shared session: preset "${p.name}" plus ${notes.length} command${notes.length === 1 ? "" : "s"}:\n  ${notes.join("\n  ")}` : `Preset: ${p.name}. ${p.blurb} ${p.hint}`);
   }, [sb]);
 
   const choose = (id: string) => {

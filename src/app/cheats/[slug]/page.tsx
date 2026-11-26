@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Suspense } from "react";
 import { CHEATS, cheatBySlug } from "@/content/cheats";
 import { cheatRefs } from "@/content/links";
 import { DangerPill } from "@/components/cheats/DangerPill";
@@ -19,7 +18,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   return c ? { title: `${c.command}: ${c.title}`, description: c.summary } : {};
 }
 
-async function Entry({ params }: { params: Params }) {
+export default async function CheatPage({ params }: { params: Params }) {
   const { slug } = await params;
   const c = cheatBySlug(slug);
   if (!c) notFound();
@@ -53,13 +52,13 @@ async function Entry({ params }: { params: Params }) {
           <pre className="overflow-x-auto rounded-[var(--radius)] bg-term-bg px-4 py-3 font-mono text-[13px] leading-relaxed text-[var(--term-ink)] scroll-thin">{c.example}</pre>
         </section>
       )}
-      <div className="mt-5 flex flex-wrap gap-2">
-        {c.simulated !== false && (
+      {c.simulated !== false && (
+        <div className="mt-5">
           <Link href={`/sandbox?preset=${c.preset ?? "started"}`} className="inline-flex h-9 items-center rounded-[var(--radius-sm)] bg-ink px-3.5 text-[13px] font-medium text-surface">
             Try it in the sandbox
           </Link>
-        )}
-      </div>
+        </div>
+      )}
       {refs.length > 0 && (
         <section className="mt-8">
           <h2 className="mb-2 text-[15px] font-semibold">Where it&apos;s taught</h2>
@@ -90,13 +89,5 @@ async function Entry({ params }: { params: Params }) {
         </section>
       )}
     </article>
-  );
-}
-
-export default function CheatPage({ params }: { params: Params }) {
-  return (
-    <Suspense fallback={<div className="p-6 text-[13px] text-muted">Loading…</div>}>
-      <Entry params={params} />
-    </Suspense>
   );
 }

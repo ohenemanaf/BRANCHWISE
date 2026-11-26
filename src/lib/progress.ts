@@ -54,6 +54,9 @@ export function useProgress(): Progress {
   return useSyncExternalStore(subscribe, load, () => EMPTY);
 }
 
+/** Current progress, read outside React (e.g. a one-off snapshot). */
+export const peekProgress = (): Progress => load();
+
 const noopSubscribe = () => () => {};
 /** false during SSR and hydration, true afterwards. */
 export function useHydrated(): boolean {

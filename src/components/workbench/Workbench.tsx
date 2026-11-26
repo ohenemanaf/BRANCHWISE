@@ -9,7 +9,10 @@ import { GraphView } from "@/components/graph/GraphView";
 import { Terminal, type TerminalHandle } from "@/components/terminal/Terminal";
 import { FilesPanel } from "@/components/files/FilesPanel";
 import { GitHubPanel } from "@/components/github/GitHubPanel";
-import { RebaseEditor } from "@/components/rebase/RebaseEditor";
+import dynamic from "next/dynamic";
+
+// The editor needs Motion's drag features; load them only when a rebase -i opens it.
+const RebaseEditor = dynamic(() => import("@/components/rebase/RebaseEditor").then((m) => m.RebaseEditor), { ssr: false });
 
 export function describeEvents(sb: Sandbox): string {
   const e = sb.lastEvents;

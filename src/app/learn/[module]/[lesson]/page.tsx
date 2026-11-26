@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { Suspense } from "react";
 import { MODULES, findLesson } from "@/content/modules";
 import { LessonRoute } from "./LessonRoute";
 
@@ -16,16 +15,8 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   return found ? { title: found.lesson.title, description: found.lesson.summary } : {};
 }
 
-async function Lesson({ params }: { params: Params }) {
+export default async function LessonPage({ params }: { params: Params }) {
   const { module, lesson } = await params;
   if (!findLesson(module, lesson)) notFound();
   return <LessonRoute moduleSlug={module} lessonSlug={lesson} />;
-}
-
-export default function LessonPage({ params }: { params: Params }) {
-  return (
-    <Suspense fallback={<div className="p-6 text-[13px] text-muted">Loading lesson…</div>}>
-      <Lesson params={params} />
-    </Suspense>
-  );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, m as motion, useReducedMotion } from "motion/react";
 import { useEffect, useMemo, useRef } from "react";
 import type { Id, Repo } from "@/engine/types";
 import { type LaneMemory, type RefLabel, layoutRepo } from "@/viz/layout";

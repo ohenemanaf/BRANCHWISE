@@ -1,16 +1,19 @@
 "use client";
 
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { ALL_LESSONS, findLesson, lessonKey } from "@/content/modules";
-import { completeLesson, setLessonStep, useHydrated, useProgress } from "@/lib/progress";
+import { completeLesson, peekProgress, setLessonStep, useHydrated } from "@/lib/progress";
 import { LessonPlayer } from "@/components/lesson/LessonPlayer";
 
 export function LessonRoute({ moduleSlug, lessonSlug }: { moduleSlug: string; lessonSlug: string }) {
   const found = findLesson(moduleSlug, lessonSlug)!;
   const key = lessonKey(moduleSlug, lessonSlug);
-  const progress = useProgress();
   const hydrated = useHydrated();
-  const saved = progress.lessons[key];
+  // Read the saved step once per mount, at hydration. Only a real resume remounts the
+  // player; a first visit keeps the server-rendered DOM (no repaint, better LCP).
+  // (The snapshot is taken at mount but only used once hydrated, so the hydration render matches the server.)
+  const [atMount] = useState(() => (typeof window === "undefined" ? null : peekProgress().lessons[key]));
+  const resumeStep = hydrated && atMount && !atMount.done ? atMount.step : 0;
   const pos = ALL_LESSONS.findIndex((x) => x.module.slug === moduleSlug && x.lesson.slug === lessonSlug);
   const link = (i: number) => {
     const x = ALL_LESSONS[i];
@@ -20,10 +23,9 @@ export function LessonRoute({ moduleSlug, lessonSlug }: { moduleSlug: string; le
   const onComplete = useCallback(() => completeLesson(key), [key]);
   return (
     <LessonPlayer
-      // remount once, when stored progress becomes readable after hydration
-      key={`${key}:${hydrated ? "client" : "server"}`}
+      key={`${key}:${resumeStep > 0 ? "resume" : "fresh"}`}
       lesson={found.lesson}
-      savedStep={saved && !saved.done ? saved.step : 0}
+      savedStep={resumeStep}
       crumbs={[
         { href: "/learn", label: "Learn" },
         { href: `/learn#m-${moduleSlug}`, label: found.module.title },
