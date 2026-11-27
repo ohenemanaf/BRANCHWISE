@@ -72,7 +72,7 @@ export function GitHubPanel({ world, exec, apply }: { world: World; exec: (line:
       })}
 
       <section>
-        <h3 className="mb-1.5 text-[12px] font-medium text-ink-2">Pull requests</h3>
+        <h2 className="mb-1.5 text-[12px] font-medium text-ink-2">Pull requests</h2>
         {!prs.length ? (
           <p className="text-[12.5px] text-muted">
             None yet. Push a branch, then run <code className="inline-code">gh pr create --fill</code>.
@@ -140,7 +140,7 @@ export function GitHubPanel({ world, exec, apply }: { world: World; exec: (line:
 
       {world.github.runs.length > 0 && (
         <section>
-          <h3 className="mb-1.5 text-[12px] font-medium text-ink-2">Actions runs</h3>
+          <h2 className="mb-1.5 text-[12px] font-medium text-ink-2">Actions runs</h2>
           <ul className="flex flex-col gap-1.5">
             {[...world.github.runs].reverse().slice(0, 4).map((r) => (
               <li key={r.id} className="rounded-[var(--radius)] border border-rule px-3 py-2">

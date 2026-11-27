@@ -44,7 +44,7 @@ export function FilesPanel({ repo, onSave }: { repo: Repo; onSave: (path: string
   return (
     <div className="flex flex-col">
       <div className="flex items-center justify-between px-3 pb-1.5 pt-2.5">
-        <h3 className="text-[12px] font-medium text-ink-2">Files in the project folder</h3>
+        <h2 className="text-[12px] font-medium text-ink-2">Files in the project folder</h2>
         <button type="button" className="rounded-md px-2 py-1 text-[12px] text-[var(--lane-0)] hover:bg-info-soft" onClick={() => setEditing({ path: "", content: "", isNew: true })}>
           New file
         </button>
