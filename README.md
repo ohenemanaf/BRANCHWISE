@@ -8,6 +8,7 @@
 ![Next.js 16](https://img.shields.io/badge/Next.js-16-black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178c6)
 ![Tests](https://img.shields.io/badge/tests-109%20unit%20%2B%2020%20e2e-0c9c6c)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
 [**Live demo**](https://branchwise-nine.vercel.app) · [Lessons](https://branchwise-nine.vercel.app/learn) · [Sandbox](https://branchwise-nine.vercel.app/sandbox) · [Cheat codes](https://branchwise-nine.vercel.app/cheats)
 
@@ -122,3 +123,7 @@ src/
 - **Simulated, not real.** Branchwise never touches real repositories or the GitHub API, which keeps it free and safe for beginners.
 - **Partial coverage of rarely used commands.** Submodules are covered as a guided walkthrough with the core commands. A few commands, such as `git blame` and `git clean`, appear in the reference but not in the sandbox.
 - **No accounts in v1.** Progress lives in the browser that made it.
+
+## License
+
+Released under the [MIT License](LICENSE).
