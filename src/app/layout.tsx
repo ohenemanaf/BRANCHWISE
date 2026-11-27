@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
 import { Suspense } from "react";
 import { SiteHeader } from "@/components/site/SiteHeader";
+import { MotionProvider } from "@/components/site/MotionProvider";
 import "./globals.css";
 
 const plexSans = IBM_Plex_Sans({ variable: "--font-plex-sans", subsets: ["latin"], weight: ["400", "500", "600"] });
@@ -38,7 +39,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <SiteHeader />
         </Suspense>
         <main id="main" className="flex-1 flex flex-col">
-          {children}
+          <MotionProvider>{children}</MotionProvider>
         </main>
       </body>
     </html>
