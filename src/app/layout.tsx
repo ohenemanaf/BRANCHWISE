@@ -9,7 +9,7 @@ const plexSans = IBM_Plex_Sans({ variable: "--font-plex-sans", subsets: ["latin"
 const plexMono = IBM_Plex_Mono({ variable: "--font-plex-mono", subsets: ["latin"], weight: ["400", "500"] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://branchwise.vercel.app"),
+  metadataBase: new URL("https://branchwise-nine.vercel.app"),
   title: { default: "Branchwise: see what Git is doing", template: "%s · Branchwise" },
   description:
     "Learn Git and GitHub by watching every command move the commit graph. Lessons, a live sandbox, mistake-recovery drills and a searchable cheat sheet. Free, no sign-up.",
