@@ -2,13 +2,14 @@ import type { Metadata, Viewport } from "next";
 import { IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
 import { Suspense } from "react";
 import { SiteHeader } from "@/components/site/SiteHeader";
+import { MotionProvider } from "@/components/site/MotionProvider";
 import "./globals.css";
 
 const plexSans = IBM_Plex_Sans({ variable: "--font-plex-sans", subsets: ["latin"], weight: ["400", "500", "600"] });
 const plexMono = IBM_Plex_Mono({ variable: "--font-plex-mono", subsets: ["latin"], weight: ["400", "500"] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://branchwise.vercel.app"),
+  metadataBase: new URL("https://branchwise-nine.vercel.app"),
   title: { default: "Branchwise: see what Git is doing", template: "%s · Branchwise" },
   description:
     "Learn Git and GitHub by watching every command move the commit graph. Lessons, a live sandbox, mistake-recovery drills and a searchable cheat sheet. Free, no sign-up.",
@@ -30,7 +31,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
-      <body className="min-h-dvh flex flex-col">
+      <body className="min-h-dvh flex flex-col" suppressHydrationWarning>
         <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-50 focus:rounded-md focus:bg-surface focus:px-3 focus:py-2">
           Skip to content
         </a>
@@ -38,7 +39,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <SiteHeader />
         </Suspense>
         <main id="main" className="flex-1 flex flex-col">
-          {children}
+          <MotionProvider>{children}</MotionProvider>
         </main>
       </body>
     </html>

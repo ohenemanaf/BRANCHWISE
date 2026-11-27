@@ -9,7 +9,10 @@ import { GraphView } from "@/components/graph/GraphView";
 import { Terminal, type TerminalHandle } from "@/components/terminal/Terminal";
 import { FilesPanel } from "@/components/files/FilesPanel";
 import { GitHubPanel } from "@/components/github/GitHubPanel";
-import { RebaseEditor } from "@/components/rebase/RebaseEditor";
+import dynamic from "next/dynamic";
+
+// The editor needs Motion's drag features; load them only when a rebase -i opens it.
+const RebaseEditor = dynamic(() => import("@/components/rebase/RebaseEditor").then((m) => m.RebaseEditor), { ssr: false });
 
 export function describeEvents(sb: Sandbox): string {
   const e = sb.lastEvents;
@@ -71,7 +74,8 @@ export function Workbench({
             <span className="flex-1" />
             <label className="flex cursor-pointer items-center gap-1.5 px-1.5 text-[12px] text-ink-2" title="Commits no branch points to any more. Git keeps them for a while and the reflog can bring them back.">
               <input type="checkbox" checked={showLost} onChange={(e) => setShowLost(e.target.checked)} className="accent-[var(--lane-0)]" />
-              Show unreachable commits
+              <span className="hidden sm:inline">Show unreachable commits</span>
+              <span className="sm:hidden">Unreachable</span>
             </label>
             <button type="button" onClick={sb.undo} disabled={!sb.past.length} className="h-7 rounded-md px-2 text-[12px] text-ink-2 hover:bg-surface-2 disabled:opacity-40" title="Step back one change (sandbox only)">
               Undo
