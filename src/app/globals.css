@@ -8,7 +8,8 @@
   --surface-2: #f8f9fb;
   --ink: #18202e;
   --ink-2: #4a5466;
-  --muted: #6b7585;
+  /* ≥ 4.5:1 on --bg (#f3f5f8) as well as on white surfaces */
+  --muted: #5f6978;
   --rule: #e1e5eb;
   --rule-strong: #cdd3dc;
   --focus: #2453d6;
