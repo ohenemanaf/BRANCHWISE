@@ -2,6 +2,8 @@
 
 **Learn Git and GitHub by watching every command move the commit graph.**
 
+Live: https://branchwise-nine.vercel.app
+
 Branchwise draws a repository as a transit map: commits are stations, branches are coloured lines, `HEAD` is the filled station. You type real `git` and `gh` commands into a terminal and watch labels move, commits get copied by a rebase, and pushes travel up to a simulated GitHub and back.
 
 It's free, needs no account, and nothing touches a real repository: everything runs in your browser.
